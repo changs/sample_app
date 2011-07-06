@@ -1,5 +1,7 @@
 .bundle
 db/*.sqlite3
 log/*.log
-*.swp
+.*.sw[a-z]
+*.un~
+Session.vim
 tmp/
