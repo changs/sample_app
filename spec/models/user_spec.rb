@@ -30,7 +30,7 @@ describe User do
     end
 
     it "should be convertible to an admin" do
-      @user.toogle!(:admin)
+      @user.toggle!(:admin)
       @user.should be_admin
     end
   end
