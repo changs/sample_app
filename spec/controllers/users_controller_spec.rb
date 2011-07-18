@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UsersController do
 
   render_views
-  
+
   describe "DELETE 'destroy'" do
     before(:each) do
       @user = Factory(:user)
@@ -26,8 +26,14 @@ describe UsersController do
 
     describe "as an admin user" do
       before(:each) do
-        admin = Factory(:user, email: "admin@example.com", admin: true)
-        test_sign_in(admin)
+        @admin = Factory(:user, email: "admin@example.com", admin: true)
+        test_sign_in(@admin)
+      end
+      
+      it "Should not destroy admin user" do
+        lambda do
+          delete :destroy, id: @admin
+        end.should_not change(User, :count)
       end
 
       it "Should destroy the user" do
@@ -60,6 +66,19 @@ describe UsersController do
         @users = [@user, second, third]
         30.times do
           @users << Factory(:user, email: Factory.next(:email))
+        end
+      end
+
+      it "should not display 'delete'" do
+        get :index
+        response.should_not have_selector("a", content: "delete")
+      end
+
+      describe "for admin users" do
+        it "should display 'delete'" do
+          @user.toggle!(:admin)
+          get :index
+          response.should have_selector("a", content: "delete")
         end
       end
 
