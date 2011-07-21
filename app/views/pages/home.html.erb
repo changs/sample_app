@@ -1,4 +1,8 @@
-  <h1 id="heading">Sample App</h1>
+<% if signed_in? %>
+<%= render 'shared/home_signed_in' %>
+<% else %>
+<h1 id="heading">Sample App</h1>
   <p>This is a very simple app which is written for learning RubyOnRails framework.</p>
 
   <%= link_to 'Sign up now!', signup_path, class: "signup_button round" %>
+  <% end %>

@@ -24,7 +24,11 @@ module SessionsHelper
   def signed_in?
     !current_user.nil?
   end
-  
+
+  def authenticate
+    deny_access unless signed_in?
+  end
+
   def deny_access
     store_location
     redirect_to signin_path, notice: "Please sign in the access this page"
